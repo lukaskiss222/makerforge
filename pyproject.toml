@@ -10,6 +10,7 @@ requires-python = ">=3.14"
 dependencies = [
     "pydantic>=2.12.5",
     "redis>=7.1.0",
+    "websockets>=16.0",
 ]
 
 [project.scripts]
@@ -22,12 +23,13 @@ build-backend = "uv_build"
 [dependency-groups]
 dev = [
     "mypy>=1.19.1",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
     "ruff>=0.14.13",
 ]
 
 [tool.ruff]
 line-length = 120
-target-version = "py314"
 src = ["src", "tests"]
 force-exclude = true
 
@@ -41,7 +43,7 @@ ignore = ["E501"]
 python_version = "3.14"
 plugins = ['pydantic.mypy']
 mypy_path = "src"
-packages = ["makerforge"]
+files = ["src", "tests"]
 pretty = true
 show_error_codes = true
 
@@ -55,3 +57,9 @@ disallow_any_generics = false
 [[tool.mypy.overrides]]
 module = ["tests.*"]
 disallow_untyped_defs = false
+disallow_untyped_calls = false
+warn_return_any = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --disable-warnings --maxfail=1"
