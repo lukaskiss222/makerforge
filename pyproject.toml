@@ -1,0 +1,57 @@
+[project]
+name = "makerforge"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "lukaskiss222", email = "lukaskiss222@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "pydantic>=2.12.5",
+    "redis>=7.1.0",
+]
+
+[project.scripts]
+makerforge = "makerforge:main"
+
+[build-system]
+requires = ["uv_build>=0.9.8,<0.10.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.19.1",
+    "ruff>=0.14.13",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py314"
+src = ["src", "tests"]
+force-exclude = true
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "C4", "PIE", "RUF"]
+# Ruff formatter only best-effort wraps; leaving E501 on often creates churn/noise.
+ignore = ["E501"]
+
+
+[tool.mypy]
+python_version = "3.14"
+plugins = ['pydantic.mypy']
+mypy_path = "src"
+packages = ["makerforge"]
+pretty = true
+show_error_codes = true
+
+strict = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unreachable = true
+no_implicit_optional = true
+disallow_any_generics = false
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+disallow_untyped_defs = false
