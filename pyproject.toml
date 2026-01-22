@@ -9,12 +9,13 @@ authors = [
 requires-python = ">=3.14"
 dependencies = [
     "pydantic>=2.12.5",
+    "pydantic-settings>=2.12.0",
     "redis>=7.1.0",
     "websockets>=16.0",
 ]
 
 [project.scripts]
-makerforge = "makerforge:main"
+makerforge = "makerforge.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.9.8,<0.10.0"]
