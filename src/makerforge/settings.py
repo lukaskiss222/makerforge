@@ -1,7 +1,7 @@
 from pydantic import AliasChoices, Field, RedisDsn
 from pydantic_settings import BaseSettings, CliSubCommand, SettingsConfigDict
 
-from .exchanges.coinmate.settings import CoinmateSettings
+from .exchanges.coinmate.sub.settings import CoinmateSettings
 
 
 class Settings(BaseSettings):
