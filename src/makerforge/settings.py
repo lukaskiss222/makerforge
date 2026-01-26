@@ -1,6 +1,7 @@
 from pydantic import AliasChoices, Field, RedisDsn
 from pydantic_settings import BaseSettings, CliSubCommand, SettingsConfigDict
 
+from .exchanges.binance.sub.settings import BinanceSettings
 from .exchanges.coinmate.sub.settings import CoinmateSettings
 
 
@@ -14,3 +15,4 @@ class Settings(BaseSettings):
     )
     redis_stream_prefix: str = Field("makerforge", description="Prefix for redis streams.")
     coinmate: CliSubCommand[CoinmateSettings]
+    binance: CliSubCommand[BinanceSettings]

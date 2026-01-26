@@ -2,12 +2,15 @@ import pydantic as py
 import redis.asyncio as redis
 from redis.typing import EncodableT, FieldT
 
+from infrastructure.ioc import get_container
 from makerforge.settings import Settings
 
 
-def stream_key(exchange: str, channel: str, pair: str, prefix: str | None = None) -> str:
+async def stream_key(exchange: str, channel: str, pair: str, prefix: str | None = None) -> str:
     if prefix is None:
-        prefix = Settings.redis_stream_prefix
+        container = get_container()
+        settings = await container.get(Settings)
+        prefix = settings.redis_stream_prefix
     return f"{prefix}:{exchange}:{channel}:{pair}"
 
 
@@ -19,6 +22,7 @@ async def add_stream_entry(
 ) -> None:
     entry_json: dict[FieldT, EncodableT] = {
         "data": entry.model_dump_json(),
+        "type": entry.__class__.__name__,
     }
     await redis_client.xadd(
         key,
