@@ -12,4 +12,5 @@ class Settings(BaseSettings):
         RedisDsn("redis://localhost:6379/1"),
         validation_alias=AliasChoices("service_redis_dsn", "redis_url", "redis-url"),
     )
+    redis_stream_prefix: str = Field("makerforge", description="Prefix for redis streams.")
     coinmate: CliSubCommand[CoinmateSettings]
